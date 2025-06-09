@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/KaareSkytte/gator/internal/config"
 )
@@ -12,16 +13,27 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error reading config: %v", err)
 	}
-	fmt.Printf("Read config: %+v/n", cfg)
 
-	err = cfg.SetUser("lane")
-	if err != nil {
-		log.Fatalf("couldn't set current user: %v", err)
+	var s state
+	s.configPointer = &cfg
+
+	var c commands
+	c.handlerFunctions = map[string]func(*state, command) error{}
+
+	c.register("login", handlerLogin)
+
+	if len(os.Args) < 2 {
+		fmt.Printf("Invalid input: not enough inputs\n")
+		os.Exit(1)
 	}
 
-	cfg, err = config.Read()
+	var com command
+	com.name = os.Args[1]
+	com.arguments = os.Args[2:]
+
+	err = c.run(&s, com)
 	if err != nil {
-		log.Fatalf("error reading config: %v", err)
+		fmt.Printf("%s", err)
+		os.Exit(1)
 	}
-	fmt.Printf("Read config again: %+v\n", cfg)
 }
