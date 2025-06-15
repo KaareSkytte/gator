@@ -1,1 +1,2 @@
-{"db_url":"postgres://example","current_user_name":"boots"}
+{"db_url":"postgres://postgres:1431@localhost:5432/gator?sslmode=disable","current_user_name":"boots"}
+
