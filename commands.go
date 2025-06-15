@@ -103,3 +103,12 @@ func handlerRegister(s *state, cmd command) error {
 	fmt.Printf("New user: %+v\n", newUser)
 	return nil
 }
+
+func handlerReset(s *state, cmd command) error {
+	err := s.db.DeleteUsers(context.Background())
+	if err != nil {
+		return fmt.Errorf("unexpected error: %v", err)
+	}
+	fmt.Print("Users deleted successfully")
+	return nil
+}
