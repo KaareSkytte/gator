@@ -36,6 +36,7 @@ func main() {
 	c.register("register", handlerRegister)
 	c.register("reset", handlerReset)
 	c.register("users", handlerListUsers)
+	c.register("agg", handlerAgg)
 
 	if len(os.Args) < 2 {
 		fmt.Printf("Invalid input: not enough inputs\n")
