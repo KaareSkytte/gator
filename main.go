@@ -32,13 +32,15 @@ func main() {
 	var c commands
 	c.handlerFunctions = map[string]func(*state, command) error{}
 
-	c.register("login", handlerLogin)
 	c.register("register", handlerRegister)
+	c.register("login", handlerLogin)
 	c.register("reset", handlerReset)
 	c.register("users", handlerListUsers)
 	c.register("agg", handlerAgg)
 	c.register("addfeed", handlerAddFeed)
 	c.register("feeds", handlerListFeeds)
+	c.register("follow", handlerFollow)
+	c.register("following", handlerListFeedFollows)
 
 	if len(os.Args) < 2 {
 		fmt.Printf("Invalid input: not enough inputs\n")
