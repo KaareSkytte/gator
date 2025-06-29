@@ -44,7 +44,7 @@ func (c *commands) register(name string, f func(*state, command) error) {
 
 func handlerLogin(s *state, cmd command) error {
 	if len(cmd.arguments) == 0 {
-		return fmt.Errorf("missing username\n")
+		return fmt.Errorf("usage: %v <name>", cmd.name)
 	}
 
 	name := cmd.arguments[0]
@@ -65,7 +65,7 @@ func handlerLogin(s *state, cmd command) error {
 
 func handlerRegister(s *state, cmd command) error {
 	if len(cmd.arguments) == 0 {
-		return fmt.Errorf("missing username\n")
+		return fmt.Errorf("usage: %v <name>", cmd.name)
 	}
 
 	name := cmd.arguments[0]

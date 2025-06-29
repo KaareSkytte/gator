@@ -43,6 +43,8 @@ func main() {
 	c.register("follow", middlewareLoggedIn(handlerFollow))
 	c.register("following", middlewareLoggedIn(handlerListFeedFollows))
 	c.register("unfollow", middlewareLoggedIn(handlerUnfollow))
+	c.register("unfollow", middlewareLoggedIn(handlerUnfollow))
+	c.register("browse", middlewareLoggedIn(handlerBrowse))
 
 	if len(os.Args) < 2 {
 		fmt.Printf("Invalid input: not enough inputs\n")
