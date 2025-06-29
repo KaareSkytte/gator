@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"time"
 
@@ -10,17 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func handlerAddFeed(s *state, cmd command) error {
-	sqlNullString := sql.NullString{
-		String: s.cfg.CurrentUserName,
-		Valid:  true,
-	}
-
-	user, err := s.db.GetUser(context.Background(), sqlNullString)
-	if err != nil {
-		return err
-	}
-
+func handlerAddFeed(s *state, cmd command, user database.User) error {
 	if len(cmd.arguments) != 2 {
 		return fmt.Errorf("usage: %s <name> <url>", cmd.name)
 	}

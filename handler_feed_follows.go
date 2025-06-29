@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"time"
 
@@ -10,17 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func handlerFollow(s *state, cmd command) error {
-	sqlNullString := sql.NullString{
-		String: s.cfg.CurrentUserName,
-		Valid:  true,
-	}
-
-	user, err := s.db.GetUser(context.Background(), sqlNullString)
-	if err != nil {
-		return err
-	}
-
+func handlerFollow(s *state, cmd command, user database.User) error {
 	if len(cmd.arguments) != 1 {
 		return fmt.Errorf("usage: %s <feed_url>", cmd.name)
 	}
@@ -46,17 +35,7 @@ func handlerFollow(s *state, cmd command) error {
 	return nil
 }
 
-func handlerListFeedFollows(s *state, cmd command) error {
-	sqlNullString := sql.NullString{
-		String: s.cfg.CurrentUserName,
-		Valid:  true,
-	}
-
-	user, err := s.db.GetUser(context.Background(), sqlNullString)
-	if err != nil {
-		return err
-	}
-
+func handlerListFeedFollows(s *state, cmd command, user database.User) error {
 	feedFollows, err := s.db.GetFeedFollowsForUser(context.Background(), user.ID)
 	if err != nil {
 		return fmt.Errorf("couldn't get feed follows: %w", err)
